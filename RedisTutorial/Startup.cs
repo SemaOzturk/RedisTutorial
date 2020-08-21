@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RedisTutorial.BackgroundTask;
 using RedisTutorial.Services;
 using StackExchange.Redis;
 
@@ -32,6 +33,7 @@ namespace RedisTutorial
            services.AddSingleton<ICacheService, RedisCacheService>();
             services.AddSingleton<IConnectionMultiplexer>(x =>
                 ConnectionMultiplexer.Connect(Configuration.GetValue<string>("RedisConnection")));
+            services.AddHostedService<RedisSubscriber>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
